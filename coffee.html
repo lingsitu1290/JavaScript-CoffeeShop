@@ -24,6 +24,9 @@
         <table class="table">
             <tr>
                 <td class="col-md-2">
+                    <button class="btn btn-default" id="brew">Coffee</button>
+                </td>
+                <td class="col-md-2">
                     <button class="btn btn-default" id="espresso">Espresso</button>
                 </td>
                 <td class="col-md-2">
@@ -34,6 +37,7 @@
                 </td>
             </tr>
             <tr>
+                <td>$2.05</td>
                 <td>$3.25</td>
                 <td>$4.15</td>
                 <td>$2.50</td>
@@ -52,9 +56,18 @@
 
     var myImage = document.getElementById("coffee-image");
     var originalImage = myImage.getAttribute("src");
-    // myImage.setAttribute("src", "static/coffee_beans.jpg");
+    var brew = document.getElementById("brew")
+    var espresso = document.getElementById("espresso");
+    var latte = document.getElementById("latte");
+    var hotChocolate = document.getElementById("hot-chocolate");
 
-    var myRevenueMessage = document.getElementById("message");
+    myImage.setAttribute("src", "static/coffee_beans.jpg");
+
+    var drinkType;
+    var drinksOrdered = {};
+
+    var myRevenueMessage = document.getElementById("revenue");
+    myRevenueMessage.innerHTML = "TEMPORARY TOTAL PLEASE UPDATE ME.";
 
     // use this JavaScript object in further study step
 
@@ -68,7 +81,23 @@
     var makeCoffee = function makeCoffee() {
         setTimeout(coffeeMachine, 1500);
         setTimeout(coffeeMug, 4000);
-        setTimeout(oriImage, 6000)
+        setTimeout(oriImage, 6000);
+        // for (var i = 0; i < prices.length-1; i++);
+            // drinkType = prices[i];
+            // drinksOrdered.push(drinkType);
+            // myImage.addEventListener('click',
+            //     function() { return makeCoffee(drinkType); });
+    }
+
+    var subtotal;
+    var totalOrderPrice;
+    var updateRevenue = function updateRevenue(drinkType){
+        for (var drink in prices) {
+            subtotal = prices[drinkType] || 0;
+            totalOrderPrice = subtotal + prices[drinkType];
+        }
+        console.log(prices[drinkType]);
+        console.log(totalOrderPrice);
     }
 
     var coffeeMachine = function coffeeMachine() {
@@ -81,9 +110,19 @@
 
     var oriImage = function oriImage() {
         myImage.setAttribute("src", originalImage);
-    }
+    
 
     myImage.addEventListener("click", makeCoffee);
+    brew.addEventListener("click", makeCoffee);
+    espresso.addEventListener("click", makeCoffee);
+    latte.addEventListener("click", makeCoffee);
+    hotChocolate.addEventListener("click", makeCoffee);
+    brew.addEventListener("click", function(){ return updateRevenue("brew") });
+    espresso.addEventListener("click", function(){ return updateRevenue("espresso") });
+    latte.addEventListener("click", function(){ return updateRevenue("latte") });
+    hotChocolate.addEventListener("click", function(){ return updateRevenue("hotChocolate") });
+
+
 
     // myImage.addEventListener("click",
     //     function() {setTimeout(
